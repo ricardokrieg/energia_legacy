@@ -1,24 +1,33 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { Header } from 'react-native-elements';
 import Reflux from 'reflux';
 
+import './global'
+
 import Actions from './actions'
+
+import CurrentDatetime from './components/CurrentDatetime'
+import Graph from './components/Graph'
+import AddReading from './components/AddReading'
+
 
 export default class App extends React.Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
+      <View style={{ flex: 1 }}>
+        <Header
+          centerComponent={{ text: 'Conta de Energia', style: { color: '#fff' } }}
+          backgroundColor={global.primaryColor}
+        />
+
+        <CurrentDatetime />
+        <Graph />
+
+        <View style={{ flexGrow: 1, backgroundColor: 'green' }}></View>
+
+        <AddReading />
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
