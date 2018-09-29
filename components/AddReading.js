@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, TouchableHighlight } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
 import Reflux from 'reflux';
 
@@ -11,6 +11,10 @@ export default class AddReading extends React.Component {
     this.state = {};
   }
 
+  onPress = () => {
+    console.log('OK');
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -20,6 +24,7 @@ export default class AddReading extends React.Component {
           type='feather'
           color={global.primaryColor}
           size={32}
+          onPress={this.onPress}
         />
       </View>
     );

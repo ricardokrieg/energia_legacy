@@ -34,6 +34,7 @@ export default class CurrentDate extends React.Component {
 const styles = StyleSheet.create({
   text: {
     textAlign: 'right',
-    marginRight: 4
+    marginRight: 4,
+    color: global.textColor
   },
 });
