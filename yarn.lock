@@ -2026,6 +2026,10 @@ event-target-shim@^1.0.5:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/event-target-shim/-/event-target-shim-1.1.1.tgz#a86e5ee6bdaa16054475da797ccddf0c55698491"
 
+eventemitter3@^1.1.1:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-1.2.0.tgz#1c86991d816ad1e504750e73874224ecf3bec508"
+
 eventemitter3@^3.0.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-3.1.0.tgz#090b4d6cdbd645ed10bf750d4b5407942d7ba163"
@@ -4842,6 +4846,19 @@ realpath-native@^1.0.0:
   resolved "https://registry.yarnpkg.com/realpath-native/-/realpath-native-1.0.2.tgz#cd51ce089b513b45cf9b1516c82989b51ccc6560"
   dependencies:
     util.promisify "^1.0.0"
+
+reflux-core@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/reflux-core/-/reflux-core-1.0.0.tgz#eb9baae2d50871324adb9312583c12e070cd61d3"
+  dependencies:
+    eventemitter3 "^1.1.1"
+
+reflux@^6.4.1:
+  version "6.4.1"
+  resolved "https://registry.yarnpkg.com/reflux/-/reflux-6.4.1.tgz#8bbbabaff54cf1b82233d67dd2542fdad2a8d678"
+  dependencies:
+    eventemitter3 "^1.1.1"
+    reflux-core "^1.0.0"
 
 regenerate@^1.2.1:
   version "1.4.0"
