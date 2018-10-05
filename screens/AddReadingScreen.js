@@ -1,7 +1,10 @@
 import React from 'react';
-import { View } from 'react-native';
-import { Icon, FormLabel, FormInput } from 'react-native-elements';
+import { View, StyleSheet } from 'react-native';
+import { Icon, Button, FormLabel, FormInput } from 'react-native-elements';
+import DateTimePicker from 'react-native-modal-datetime-picker';
 import Reflux from 'reflux';
+import Moment from 'moment';
+import 'moment/locale/pt-br';
 
 import ReadingStore from '../stores/ReadingStore';
 import { ReadingActions } from '../actions/ReadingActions';
@@ -27,7 +30,10 @@ export default class AddReadingScreen extends Reflux.Component {
     super(props);
 
     this.store = ReadingStore;
-    this.state = { value: '' };
+    this.state = {
+      reading: { value: '', timestamp: new Date() },
+      isDateTimePickerVisible: false,
+    };
   }
 
   componentDidMount() {
@@ -39,12 +45,52 @@ export default class AddReadingScreen extends Reflux.Component {
     this.props.navigation.goBack();
   };
 
+  _showDateTimePicker = () => {
+    this.setState({ isDateTimePickerVisible: true });
+  };
+
+  _hideDateTimePicker = () => {
+    this.setState({ isDateTimePickerVisible: false });
+  };
+
+  _handleDatePicked = (datetime) => {
+    this.setState({ reading: { ...this.state.reading, timestamp: datetime } });
+    this._hideDateTimePicker();
+  };
+
   render() {
+    Moment.locale();
+
     return (
-      <View>
+      <View style={styles.container}>
+        <Button
+          raised
+          icon={{name: 'calendar', type: 'feather', color: global.primaryColor}}
+          backgroundColor='white'
+          color={global.textColor}
+          title={Moment(this.state.reading.timestamp).format('LLLL')}
+          onPress={this._showDateTimePicker}
+        />
+        <DateTimePicker
+          mode='datetime'
+          isVisible={this.state.isDateTimePickerVisible}
+          onConfirm={this._handleDatePicked}
+          onCancel={this._hideDateTimePicker}
+        />
+
         <FormLabel>Valor</FormLabel>
-        <FormInput onChangeText={(text) => this.setState({ value: text })} />
+        <FormInput
+          autoFocus={true}
+          keyboardType='phone-pad'
+          onChangeText={(text) => this.setState({ reading: { ...this.state.reading, value: text } })}
+        />
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    paddingTop: 20
+  },
+});

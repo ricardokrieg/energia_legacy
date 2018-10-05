@@ -1,31 +1,28 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import Reflux from 'reflux';
+import Moment from 'moment';
+import 'moment/locale/pt-br';
 
 
 export default class CurrentDate extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { currentTime: this.getCurrentTime() };
+    this.state = { currentTime: new Date() };
   }
 
   componentDidMount() {
     setInterval( () => {
       this.setState({
-        currentTime: this.getCurrentTime()
+        currentTime: new Date()
       })
     }, 1000);
-  }
-
-  getCurrentTime() {
-    return new Date().toLocaleString();
   }
 
   render() {
     return (
       <View>
-        <Text style={styles.text}>{this.state.currentTime}</Text>
+        <Text style={styles.text}>{Moment(this.state.currentTime).format('LLLL')}</Text>
       </View>
     );
   }

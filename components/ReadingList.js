@@ -33,9 +33,9 @@ export default class ReadingList extends Reflux.Component {
       <ScrollView style={styles.container}>
         <List containerStyle={styles.list}>
           {
-            this.state.readings.map((reading) => (
+            this.state.readings.map((reading, index) => (
               <ListItem
-                key={reading}
+                key={index}
                 title={reading}
               />
             ))
@@ -44,7 +44,7 @@ export default class ReadingList extends Reflux.Component {
       </ScrollView>
     );
 
-    return noReading;
+    return this.state.readings.length > 0 ? readingList : noReading;
   };
 }
 
