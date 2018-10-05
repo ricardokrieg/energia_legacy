@@ -41,7 +41,7 @@ export default class AddReadingScreen extends Reflux.Component {
   };
 
   save = () => {
-    ReadingActions.add(this.state.value);
+    ReadingActions.add(this.state.reading);
     this.props.navigation.goBack();
   };
 
@@ -59,8 +59,6 @@ export default class AddReadingScreen extends Reflux.Component {
   };
 
   render() {
-    Moment.locale();
-
     return (
       <View style={styles.container}>
         <Button

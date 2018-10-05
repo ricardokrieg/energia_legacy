@@ -1,4 +1,4 @@
 import Reflux from 'reflux';
 
 
-export var ReadingActions = Reflux.createActions(['add']);
+export var ReadingActions = Reflux.createActions(['add', 'delete']);

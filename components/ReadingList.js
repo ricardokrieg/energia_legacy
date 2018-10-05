@@ -1,9 +1,13 @@
 import React from 'react';
-import { StyleSheet, View, ScrollView, Text } from 'react-native';
+import { StyleSheet, View, ScrollView, Text, Alert } from 'react-native';
 import { Icon, List, ListItem } from 'react-native-elements';
+import Swipeout from 'react-native-swipeout';
 import Reflux from 'reflux';
+import Moment from 'moment';
+import 'moment/locale/pt-br';
 
 import ReadingStore from '../stores/ReadingStore';
+import { ReadingActions } from '../actions/ReadingActions';
 
 
 export default class ReadingList extends Reflux.Component {
@@ -12,10 +16,35 @@ export default class ReadingList extends Reflux.Component {
 
     this.store = ReadingStore;
   };
-  // <Text style={styles.text}>Nenhuma leitura. Clique no ➕ para adicionar.</Text>
+
+  onPressDelete(reading) {
+    Alert.alert(
+      'Excluir',
+      'Tem certeza que deseja excluir essa leitura?',
+      [
+        {text: 'Não', style: 'cancel'},
+        {text: 'Sim', onPress: () => ReadingActions.delete(reading)},
+      ]
+    )
+  }
+
+  buttonFor(reading) {
+    return [
+      {
+        backgroundColor: 'tomato',
+        component: (
+          <View style={styles.swipeIconContainer}>
+            <Icon name='trash' type='feather' color='white' size={32} />
+          </View>
+        ),
+        type: 'delete',
+        onPress: () => { this.onPressDelete(reading) }
+      }
+    ];
+  }
 
   render() {
-    noReading = (
+    const noReading = (
       <View style={[styles.container, styles.textContainer]}>
         <Text style={styles.text}>Nenhuma leitura. Clique no</Text>
         <Icon
@@ -29,15 +58,17 @@ export default class ReadingList extends Reflux.Component {
       </View>
     );
 
-    readingList = (
+    const readingList = (
       <ScrollView style={styles.container}>
         <List containerStyle={styles.list}>
           {
             this.state.readings.map((reading, index) => (
-              <ListItem
-                key={index}
-                title={reading}
-              />
+              <Swipeout right={this.buttonFor(reading)} key={index} autoClose={true} backgroundColor='white'>
+                <ListItem
+                  title={reading.value}
+                  subtitle={Moment(reading.timestamp).format('LLLL')}
+                />
+              </Swipeout>
             ))
           }
         </List>
@@ -71,5 +102,10 @@ const styles = StyleSheet.create({
     marginTop: 0,
     borderTopWidth: 0,
     borderBottomWidth: 0
+  },
+  swipeIconContainer: {
+    flexGrow: 1,
+    flexDirection: 'column',
+    justifyContent: 'center'
   }
 });
