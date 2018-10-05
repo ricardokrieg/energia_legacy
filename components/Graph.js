@@ -21,6 +21,6 @@ export default class Graph extends React.Component {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'tomato',
-    height: 300
+    height: 250
   },
 });

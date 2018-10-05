@@ -11,6 +11,6 @@ export default class ReadingStore extends Reflux.Store {
   }
 
   onAdd(reading) {
-    this.setState({ readings: [...this.state.readings, reading] });
+    this.setState({ readings: [reading, ...this.state.readings] });
   }
 }
