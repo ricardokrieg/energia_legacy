@@ -1,19 +1,16 @@
-var Actions = Reflux.createActions(['add']);
+import Reflux from 'reflux';
 
-class ReadingStore extends Reflux.Store {
+import { ReadingActions } from '../actions/ReadingActions';
+
+
+export default class ReadingStore extends Reflux.Store {
   constructor() {
     super();
     this.state = { readings: [] };
-    this.listenables = [Actions];
+    this.listenables = [ReadingActions];
   }
 
   onAdd(reading) {
-    console.log('BEFORE');
-    console.log(this.state.readings);
-
     this.setState({ readings: [...this.state.readings, reading] });
-
-    console.log('AFTER');
-    console.log(this.state.readings);
   }
 }

@@ -1,9 +1,13 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Icon, FormLabel, FormInput } from 'react-native-elements';
+import Reflux from 'reflux';
+
+import ReadingStore from '../stores/ReadingStore';
+import { ReadingActions } from '../actions/ReadingActions';
 
 
-export default class AddReadingScreen extends React.Component {
+export default class AddReadingScreen extends Reflux.Component {
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state;
 
@@ -19,22 +23,27 @@ export default class AddReadingScreen extends React.Component {
     };
   };
 
+  constructor(props) {
+    super(props);
+
+    this.store = ReadingStore;
+    this.state = { value: '' };
+  }
+
   componentDidMount() {
     this.props.navigation.setParams({ onPress: this.save });
   };
 
   save = () => {
-    console.log('Save');
-    // refluxSaveAction(this.state.reading);
-    //   \
-    //    --> store.readings << reading
+    ReadingActions.add(this.state.value);
+    this.props.navigation.goBack();
   };
 
   render() {
     return (
       <View>
         <FormLabel>Valor</FormLabel>
-        <FormInput />
+        <FormInput onChangeText={(text) => this.setState({ value: text })} />
       </View>
     );
   }
