@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import Reflux from 'reflux';
 
 
 export default class Graph extends React.Component {

@@ -17,7 +17,7 @@ export default class HomeScreen extends React.Component {
       <View style={{ flex: 1 }}>
         <CurrentDatetime />
         <Graph />
-        <ReadingList />
+        <ReadingList navigation={this.props.navigation} />
 
         <View style={styles.addContainer}>
           <Icon

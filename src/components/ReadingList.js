@@ -15,7 +15,11 @@ export default class ReadingList extends Reflux.Component {
     super(props);
 
     this.store = ReadingStore;
-  };
+  }
+
+  onPress(reading) {
+    this.props.navigation.navigate('AddReading', { reading: reading });
+  }
 
   onPressDelete(reading) {
     Alert.alert(
@@ -67,6 +71,7 @@ export default class ReadingList extends Reflux.Component {
                 <ListItem
                   title={reading.value}
                   subtitle={Moment(reading.timestamp).format('LLLL')}
+                  onPress={() => this.onPress(reading)}
                 />
               </Swipeout>
             ))

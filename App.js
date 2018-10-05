@@ -2,10 +2,10 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 
-import './global'
+import './src/global'
 
-import HomeScreen from './screens/HomeScreen'
-import AddReadingScreen from './screens/AddReadingScreen'
+import HomeScreen from './src/screens/HomeScreen'
+import AddReadingScreen from './src/screens/AddReadingScreen'
 
 
 const Root = createStackNavigator(

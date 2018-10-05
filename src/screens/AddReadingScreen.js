@@ -31,7 +31,7 @@ export default class AddReadingScreen extends Reflux.Component {
 
     this.store = ReadingStore;
     this.state = {
-      reading: { value: '', timestamp: new Date() },
+      reading: { value: '', timestamp: new Date(), ...this.props.navigation.getParam('reading', {}) },
       isDateTimePickerVisible: false,
     };
   }
@@ -78,6 +78,7 @@ export default class AddReadingScreen extends Reflux.Component {
 
         <FormLabel>Valor</FormLabel>
         <FormInput
+          value={this.state.reading.value}
           autoFocus={true}
           keyboardType='phone-pad'
           onChangeText={(text) => this.setState({ reading: { ...this.state.reading, value: text } })}

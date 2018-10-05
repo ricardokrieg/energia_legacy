@@ -9,6 +9,9 @@ export default class ReadingStore extends Reflux.Store {
   constructor() {
     super();
 
+    // DEBUG. clear database
+    // AsyncStorage.removeItem('@Energia:readings');
+
     this.listenables = [ReadingActions];
 
     this.state = { readings: [] };
@@ -21,7 +24,18 @@ export default class ReadingStore extends Reflux.Store {
     console.log('ADD');
     console.log(reading);
 
-    this.setState({ readings: [reading, ...this.state.readings] });
+    const index = _.findIndex(this.state.readings, (r) => { return r.id === reading.id });
+
+    if (index >= 0) {
+      // replace existing Reading
+      this.setState({ readings: [
+        ..._.slice(this.state.readings, 0, index),
+        {...this.state.readings[index], ...reading},
+        ..._.slice(this.state.readings, index+1),
+      ] });
+    } else {
+      this.setState({ readings: [{...reading, id: new Date().getTime()}, ...this.state.readings] });
+    }
 
     this.save();
   }
@@ -30,7 +44,7 @@ export default class ReadingStore extends Reflux.Store {
     console.log('DELETE');
     console.log(reading);
 
-    this.setState({ readings: _.filter(this.state.readings, (r) => { return r.timestamp.getTime() != reading.timestamp.getTime() }) });
+    this.setState({ readings: _.filter(this.state.readings, (r) => { return r.id !== reading.id }) });
 
     this.save();
   }
