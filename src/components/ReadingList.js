@@ -3,6 +3,7 @@ import { StyleSheet, View, ScrollView, Text, Alert } from 'react-native';
 import { Icon, List, ListItem } from 'react-native-elements';
 import Swipeout from 'react-native-swipeout';
 import Reflux from 'reflux';
+import _ from 'lodash';
 import Moment from 'moment';
 import 'moment/locale/pt-br';
 
@@ -48,39 +49,39 @@ export default class ReadingList extends Reflux.Component {
   }
 
   render() {
-    const noReading = (
-      <View style={[styles.container, styles.textContainer]}>
-        <Text style={styles.text}>Nenhuma leitura. Clique no</Text>
-        <Icon
-          name='plus'
-          type='feather'
-          color={global.primaryColor}
-          size={16}
-          containerStyle={styles.icon}
-        />
-        <Text style={styles.text}>para adicionar.</Text>
-      </View>
-    );
-
-    const readingList = (
-      <ScrollView style={styles.container}>
-        <List containerStyle={styles.list}>
-          {
-            this.state.readings.map((reading, index) => (
-              <Swipeout right={this.buttonFor(reading)} key={index} autoClose={true} backgroundColor='white'>
-                <ListItem
-                  title={reading.value}
-                  subtitle={Moment(reading.timestamp).format('LLLL')}
-                  onPress={() => this.onPress(reading)}
-                />
-              </Swipeout>
-            ))
-          }
-        </List>
-      </ScrollView>
-    );
-
-    return this.state.readings.length > 0 ? readingList : noReading;
+    if (_.isEmpty(this.state.readings)) {
+      return (
+        <View style={[styles.container, styles.textContainer]}>
+          <Text style={styles.text}>Nenhuma leitura. Clique no</Text>
+          <Icon
+            name='plus'
+            type='feather'
+            color={global.primaryColor}
+            size={16}
+            containerStyle={styles.icon}
+          />
+          <Text style={styles.text}>para adicionar.</Text>
+        </View>
+      );
+    } else {
+      return (
+        <ScrollView style={styles.container}>
+          <List containerStyle={styles.list}>
+            {
+              this.state.readings.map((reading, index) => (
+                <Swipeout right={this.buttonFor(reading)} key={index} autoClose={true} backgroundColor='white'>
+                  <ListItem
+                    title={reading.value}
+                    subtitle={Moment(reading.timestamp).format('LLLL')}
+                    onPress={() => this.onPress(reading)}
+                  />
+                </Swipeout>
+              ))
+            }
+          </List>
+        </ScrollView>
+      );
+    }
   };
 }
 
