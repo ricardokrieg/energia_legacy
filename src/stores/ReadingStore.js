@@ -21,6 +21,8 @@ export default class ReadingStore extends Reflux.Store {
   }
 
   onAdd(reading) {
+    reading = {...reading, value: parseInt(reading.value)};
+
     console.log('ADD');
     console.log(reading);
 
