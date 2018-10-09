@@ -1,8 +1,9 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Icon, Button, FormLabel, FormInput } from 'react-native-elements';
+import { Icon, Button, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import Reflux from 'reflux';
+import _ from 'lodash';
 import Moment from 'moment';
 import 'moment/locale/pt-br';
 
@@ -33,6 +34,7 @@ export default class AddReadingScreen extends Reflux.Component {
     this.state = {
       reading: { value: '', timestamp: new Date(), ...this.props.navigation.getParam('reading', {}) },
       isDateTimePickerVisible: false,
+      isFormDirty: false
     };
   }
 
@@ -58,7 +60,20 @@ export default class AddReadingScreen extends Reflux.Component {
     this._hideDateTimePicker();
   };
 
+  formErrorMessages() {
+    if (!this.state.isFormDirty) return;
+
+    if (_.isEmpty(this.state.reading.value)) {
+      return <FormValidationMessage>Valor é obrigatório</FormValidationMessage>;
+    }
+
+    if (_.parseInt(this.state.reading.value) < 0) {
+      return <FormValidationMessage>Valor não pode ser negativo</FormValidationMessage>;
+    }
+  }
+
   render() {
+
     return (
       <View style={styles.container}>
         <Button
@@ -81,8 +96,9 @@ export default class AddReadingScreen extends Reflux.Component {
           value={this.state.reading.value.toString()}
           autoFocus={true}
           keyboardType='phone-pad'
-          onChangeText={(text) => this.setState({ reading: { ...this.state.reading, value: text } })}
+          onChangeText={(text) => this.setState({ reading: { ...this.state.reading, value: text }, isFormDirty: true })}
         />
+        {this.formErrorMessages()}
       </View>
     );
   }
