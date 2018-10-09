@@ -17,10 +17,12 @@ export default class Graph extends Reflux.Component {
   }
 
   dateFormat() {
-    const firstDay = Moment(_.first(this.state.readings).timestamp);
-    const lastDay = Moment(_.last(this.state.readings).timestamp);
+    const timestamps = _.map(this.state.readings);
 
-    const diff = Math.abs(lastDay.diff(firstDay, 'days'));
+    const firstDate = Moment(_.min(timestamps));
+    const lastDate = Moment(_.max(timestamps));
+
+    const diff = Math.abs(lastDate.diff(firstDate, 'days'));
 
     if (diff <= 10) {
       return 'D';
@@ -31,8 +33,10 @@ export default class Graph extends Reflux.Component {
 
   render() {
     if (this.state.readings && this.state.readings.length > 1) {
-      const labels = _.map(this.state.readings, (r) => { return Moment(r.timestamp).format(this.dateFormat()) });
-      const data = _.map(this.state.readings, 'value');
+      const readings = _.sortBy(this.state.readings, (r) => { return Moment(r.timestamp) });
+
+      const labels = _.map(readings, (r) => { return Moment(r.timestamp).format(this.dateFormat()) });
+      const data = _.map(readings, 'value');
 
       return (
         <LineChart

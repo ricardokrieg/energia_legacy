@@ -64,11 +64,13 @@ export default class ReadingList extends Reflux.Component {
         </View>
       );
     } else {
+      const readings = _.sortBy(this.state.readings, (r) => { return Moment(r.timestamp) }).reverse();
+
       return (
         <ScrollView style={styles.container}>
           <List containerStyle={styles.list}>
             {
-              this.state.readings.map((reading, index) => (
+              readings.map((reading, index) => (
                 <Swipeout right={this.buttonFor(reading)} key={index} autoClose={true} backgroundColor='white'>
                   <ListItem
                     title={reading.value}
