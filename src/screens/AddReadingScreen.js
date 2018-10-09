@@ -15,7 +15,7 @@ export default class AddReadingScreen extends Reflux.Component {
     const { params = {} } = navigation.state;
 
     return {
-      title: 'Adicionar Leitura',
+      title: navigation.getParam('reading', false) ? 'Editar Leitura' : 'Adicionar Leitura',
       headerRight: (<Icon
         name='check'
         type='feather'
@@ -78,7 +78,7 @@ export default class AddReadingScreen extends Reflux.Component {
 
         <FormLabel>Valor</FormLabel>
         <FormInput
-          value={this.state.reading.value}
+          value={this.state.reading.value.toString()}
           autoFocus={true}
           keyboardType='phone-pad'
           onChangeText={(text) => this.setState({ reading: { ...this.state.reading, value: text } })}

@@ -22,6 +22,7 @@ export default class HomeScreen extends React.Component {
         <View style={styles.addContainer}>
           <Icon
             raised
+            reverse
             name='plus'
             type='feather'
             color={global.primaryColor}
@@ -38,6 +39,6 @@ const styles = StyleSheet.create({
   addContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    paddingBottom: 40
+    paddingBottom: 0
   }
 });
