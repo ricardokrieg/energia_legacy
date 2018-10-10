@@ -15,7 +15,7 @@ export default class ReadingGroup extends Reflux.Component {
 
     this.store = ReadingStore;
 
-    this.state = { readings: [], currentDateGroupIndex: 0 };
+    this.state = { readings: [], billDates: [], currentDateGroupIndex: 0 };
   }
 
   componentDidUpdate(_prevProps, prevState) {
