@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Icon } from 'react-native-elements';
 
-import CurrentDatetime from '../components/CurrentDatetime'
+import ReadingGroup from '../components/ReadingGroup'
 import Graph from '../components/Graph'
 import ReadingList from '../components/ReadingList'
 
@@ -15,7 +15,7 @@ export default class HomeScreen extends React.Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <CurrentDatetime />
+        <ReadingGroup />
         <Graph />
         <ReadingList navigation={this.props.navigation} />
 

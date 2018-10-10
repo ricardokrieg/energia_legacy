@@ -73,7 +73,6 @@ export default class AddReadingScreen extends Reflux.Component {
   }
 
   render() {
-
     return (
       <View style={styles.container}>
         <Button
